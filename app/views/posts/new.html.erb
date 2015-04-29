@@ -1,0 +1,15 @@
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1 class="text-center">New Post</h1>
+
+    <%= render "layouts/flash" %>
+
+    <%= bootstrap_form_for :post do |f| %>
+    <%= f.text_field :title, placeholder: "Post title", icon: "envelope" %>
+    <%= f.text_field :link, placeholder: "Post link", icon: "lock" %>
+    <%= f.submit "Save Post", class: "btn btn-primary" %>
+    <% end %>
+
+  </div>
+</div>
