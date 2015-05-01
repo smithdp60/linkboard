@@ -13,11 +13,16 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
 
-  get 'posts' => 'posts#new'
-  post 'posts' => 'posts#create'
-
   # Test logout via url (for development)
   get 'logout' => 'sessions#destroy'
+
+  # resources :posts
+  resources :posts do
+    resources :votes, :only => [:create]
+    resources :comments do
+      resources :votes
+    end
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

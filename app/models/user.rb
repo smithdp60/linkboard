@@ -2,7 +2,16 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+  #posts created by user
   has_many :posts
+
+  #posts about this user
+  has_many :votes, as: :votable
+
+  #posts cast by user (via user_id foreign key)
+  has_many :ratings, class_name: 'Vote'
+
+  has_many :comments
 
   validates :name,
     presence: true,

@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+
+    <%= @post.title %> @
+    <%= link_to @post.link, @post.link %>
+
+    <%= render "layouts/flash" %>
+
+    <%= bootstrap_form_for [@post, @comment] do |f| %>
+    <%= f.hidden_field :user_id, user_id: @current_user.id %>
+    <%= f.text_field :body, hide_label: true, placeholder: "Post comment", icon: "comment" %>
+    <%= f.submit "Comment", class: "btn btn-primary" %>
+    <% end %>
+
+
+    <table class="table">
+      <th>Vote</th>
+      <th>Score</th>
+      <th>Comment</th>
+      <% @comments.each do |c| %>
+      <tr>
+        <td>
+          <%= bootstrap_form_for [@post, c, @vote] do |f| %>
+          <%= f.hidden_field :value, value: "1" %>
+          <%= f.button "", class: "btn btn-primary btn-sm glyphicon glyphicon-hand-up" %>
+          <% end %>
+          <%= bootstrap_form_for [@post, c, @vote] do |f| %>
+          <%= f.hidden_field :value, value: "-1" %>
+          <%= f.button "", class: "btn btn-danger btn-sm glyphicon glyphicon-hand-down" %>
+          <% end %>
+        </td>
+        <td>
+          <%= c.votes.reduce(0){|sum, v| sum + v.value} %>
+
+        </td>
+        <td><%= c.body %></td>
+      </tr>
+      <% end %>
+
+    </table>
+  </div>
+</div>
